@@ -193,9 +193,10 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 		$scope.currentPage = 0;
 		$scope.pageSize = 50;
 		$scope.numberOfPages = 0;
+		$scope.dataLength = 0;
 		
 		$scope.setupPages = function(len){
-		  console.log( len);
+		  $scope.dataLength = len;
 		  $scope.numberOfPages =  Math.ceil(len / $scope.pageSize);
 		  
 		  console.log( $scope.numberOfPages); 
