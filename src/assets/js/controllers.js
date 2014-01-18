@@ -48,6 +48,8 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
     $scope.addList = []
     
     $scope.addAdded = function( list ){
+    
+    
 			 angular.forEach(list, function(lv, lk){
 			   $scope.fPdfs[lk].toAdd = true; 
 					angular.forEach($scope.addList, function(v, k){
@@ -71,7 +73,7 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
       else
         $scope.removePdf(pdf)
       pdf.toAdd = !pdf.toAdd
-      console.log($scope.addList);
+      //console.log($scope.addList);
     }
     
     $scope.addPdf = function( pdf){
@@ -120,6 +122,53 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 		       }
 		     }
 		     $scope.addAdded($scope.fPdfs); 
+		  });
+		}
+		
+		$scope.rgetCSV = function(){
+		  /* rget is Reconciling get. Get the file,
+		  check it against the current selected list and merge */
+		  var gurl = 'app/getCSV.php',
+		  names = [];
+		  $http.get(gurl).success( function(data){
+		  
+		    names = data.split('*'); 
+		    for( var i = 0, j = names.length - 1; j >= i; j--){
+		      if( names[j] == "" || names[j] == 'Name' || names[j] == "*"){
+		        names.splice(j, 1);
+		      }
+		    }
+		    
+		    /* create a backup list of the current selections
+		     * loop through names and remove duplicates from 
+		     * selections.
+		     * combine remainder with new list*/
+		     
+		    var addBackup = $scope.addList;
+		    for(var i in addBackup)
+		    
+		    for( var i = 0, j = names.length; i < j; i++){
+		      for(var n = 0, m = addBackup.length; n < m; n++){
+		      
+		        var theName = addBackup[n] ? addBackup[n].Name : 'Gibberish';
+		      
+		        if( names[i] == theName){
+		          addBackup.splice(n, 1);
+		        }
+		      }
+		    }
+		    
+		    for( var i in addBackup){
+		      if(addBackup[i])
+		        names.push( addBackup[i].Name );
+		    }
+		    
+		    $scope.addList = []
+		    for( var i in names)
+		      $scope.addList.push({Name: names[i]})
+		      
+		    $scope.addAdded($scope.fPdfs);
+		    
 		  });
 		}
 		
