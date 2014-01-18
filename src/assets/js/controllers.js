@@ -39,8 +39,8 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
           }
         });
       }
+      $scope.setupPages(rets.length);
       
-     
       
       return rets;
     }
@@ -188,6 +188,21 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
             });
 		}
 		
+		/* bootstrap pagination controls */
+		
+		$scope.currentPage = 0;
+		$scope.pageSize = 50;
+		$scope.numberOfPages = 0;
+		
+		$scope.setupPages = function(len){
+		  console.log( len);
+		  $scope.numberOfPages =  Math.ceil(len / $scope.pageSize);
+		  
+		  console.log( $scope.numberOfPages); 
+		}
+	
+		
+		
   
   }])
   .directive('table', function(){
@@ -203,4 +218,10 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
       }
     });
   })
+  .filter('startFrom', function(){
+    return function(input, start){
+      start = +start;
+      return input.slice(start);
+    }
+  });
   
