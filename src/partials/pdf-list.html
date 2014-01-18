@@ -3,12 +3,13 @@
     <!-- sidebar -->
     <div class="span12 search">
       <h2>Filter Table</h2>
-      Search: <input ng-model="query">
+      Account: 
       <select  ng-model="currentTitle">
         <option ng-repeat="title in titles" value="{{title}}">{{title}}</option>
       </select>
-      <button ng-click="saveCSV()" class="button">Save</button>
-      <button ng-click="getCSV()" class="button">Open</button>
+      Search: <input ng-model="query">
+      <button ng-click="saveCSV()" class="btn btn-default">Save</button>
+      <!--button ng-click="getCSV()" class="button">Open</button-->
     </div>
   <div>
   <div class="row-fluid">

@@ -4,6 +4,9 @@
 .search {
   margin: 27px 0; }
 
+table, .search {
+  padding: 0 20px; }
+
 tr {
   border-color: gray;
   background: white;
