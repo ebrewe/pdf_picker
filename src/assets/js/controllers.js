@@ -50,9 +50,12 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
     
     $scope.addAdded = function( list ){
 			 angular.forEach(list, function(lv, lk){
+			   $scope.fPdfs[lk].toAdd = true; 
 					angular.forEach($scope.addList, function(v, k){
-						if( lv.Name == v.Name)
+						if( lv.Name == v.Name){
 							$scope.fPdfs[lk].toAdd = false;
+							$scope.addList[k] = $scope.fPdfs[lk]; 
+						}
 					});
 				});
     }
@@ -101,6 +104,40 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 				if( a.Account > b.Account)
 					return 1;
 				return 0;
+		}
+		
+		$scope.getCSV = function(){
+		  var gurl = 'app/getCSV.php',
+		  names = [];
+		  $http.get(gurl).success( function(data){
+		     names = data.split('*'); 
+				 $scope.addList.length = 0; 
+				 $scope.addAdded($scope.fPdfs);
+		     for( var i = 0, j = names.length; i < j; i++){
+		       if( names[i] != "" && names[i] !== 'Name' && names[i] !== "*"){
+		         var pdfItem = {};
+		         pdfItem.Name = names[i];
+		         $scope.addList.push(pdfItem);
+		       }
+		     }
+		     $scope.addAdded($scope.fPdfs); 
+		  });
+		}
+		
+		$scope.saveCSV = function(){
+		  console.log ('Saving', $scope.addList);
+		  var purl = 'app/putCSV.php',
+		  postData = $scope.addList;
+		  $http({
+            url: purl,
+            method: "POST",
+            data: postData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config) {
+                console.log(data);
+            }).error(function (data, status, headers, config) {
+                console.log(status);
+            });
 		}
 		
   
