@@ -2,10 +2,8 @@
   box-sizing: border-box; }
 
 .search {
-  margin: 27px 0; }
-
-table, .search {
-  padding: 0 20px; }
+  padding: 27px 20px;
+  margin-bottom: 27px !important; }
 
 tr {
   border-color: gray;
@@ -19,6 +17,9 @@ tr {
     background: #def5d5; }
   tr:focus, tr:hover {
     background: lightYellow; }
+
+thead tr {
+  background: none !important; }
 
 td {
   position: relative;
@@ -44,3 +45,6 @@ td {
 
 a.add-toggle {
   display: block; }
+
+.fa-eye-slash {
+  color: #b84237; }

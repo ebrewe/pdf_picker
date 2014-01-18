@@ -11,6 +11,7 @@
   
   <script src="assets/lib/xmlToJson/xml2json.min.js"></script>
   <script src="assets/lib/jquery/jquery-1.10.2.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
   <script src="assets/lib/angular/angular.js"></script>
   <script src="assets/lib/angular/angular-animate.js"></script>
   <script src="assets/lib/angular/angular-resource.js"></script>
@@ -27,6 +28,13 @@
   <div class="view-container">
     <div ng-view class="view-frame"></div>
   </div>
-
+  <script type="text/javascript">
+    //keep them bootystrap dds from closing
+    jQuery( function($){
+      $('.view-container').on('click', '.dropdown-menu a', function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
 </body>
 </html>

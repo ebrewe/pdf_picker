@@ -5,13 +5,13 @@
 $green: #78d552;
 $red: #d14e42;
 
+
+
 .search {
-  margin: 27px 0;
+  padding: 27px 20px;
+  margin-bottom:27px!important;
 }
 
-table, .search {
-  padding: 0 20px;
-}
 tr{
   border-color:gray;
   background:white;
@@ -32,6 +32,10 @@ tr{
   &:hover {
     background:lightYellow; 
   }
+}
+
+thead tr {
+  background:none!important;
 }
 
 
@@ -73,4 +77,8 @@ td {
 
 a.add-toggle {
   display:block;
+}
+
+.fa-eye-slash {
+  color:desaturate( darken($red, 7%), 7%);
 }

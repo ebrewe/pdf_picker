@@ -199,10 +199,27 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 		  $scope.dataLength = len;
 		  $scope.numberOfPages =  Math.ceil(len / $scope.pageSize);
 		  
-		  console.log( $scope.numberOfPages); 
 		}
 	
+		/* field visibility toggles */
 		
+		$scope.accountVisible = true
+		$scope.subjectVisible = true
+		$scope.fileNameVisible = true
+		$scope.stellentNameVisible = true
+		$scope.titleVisible = true
+		$scope.descriptionVisible = true
+		$scope.ownerVisible = true
+		$scope.accessibleVisible = true
+		$scope.contentPlanVisible = true
+		$scope.otherLanguageVisible = true
+		$scope.keywordsVisible = true
+		$scope.publishedVisible = true
+		$scope.modifiedVisible = true
+		
+		$scope.toggleColumn = function( column ){
+		  $scope[column] = ! $scope[column];
+		}
 		
   
   }])
