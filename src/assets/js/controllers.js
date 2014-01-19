@@ -29,10 +29,6 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
     
     $scope.orderProp = 'Subject';
     
-    $scope.rowCollapse = function(ev){
-      console.log(ev.srcElement)
-    }
-    
     $scope.filterPdfs = function(list, filter){
       var rets = [];
       if(list){
@@ -51,6 +47,32 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
       
       
       return rets;
+    }
+    
+    /* Sorting */
+    
+    $scope.orderColumn = 'OriginalName';
+    
+    $scope.sortOrders = {
+      Subject: false,
+      Upload: false,
+      OriginalName: false,
+      Name: false,
+      Title: false,
+      Description: false,
+      ContentContact: false,
+      Accessible: false,
+      ContentPlan: false,
+      HasTranslationLang: false,
+      Keywords: false,
+      PublishDate: false,
+      ModifiedDate: false,
+    }
+    
+    $scope.sortClick = function( sortProp){
+      $scope.sortOrders[sortProp] = !$scope.sortOrders[sortProp];
+      $scope.orderColumn = $scope.sortOrders[sortProp] ? sortProp : '-'+sortProp
+      console.log($scope.orderColumn);
     }
     
     $scope.addList = []

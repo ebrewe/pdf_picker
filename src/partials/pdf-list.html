@@ -55,22 +55,22 @@
 					<tr>
 						<th>Upload</th>
 						<th ng-class="{'visible': accountVisible, 'hidden': !accountVisible}">Account</th>
-						<th ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}"><input ng-model="query.Subject" placeHolder="Subject"></th>
-						<th ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}"><input ng-model="query.OriginalName" placeHolder="File Name"></th>
-						<th ng-class="{'visible': stellentNameVisible, 'hidden': !stellentNameVisible}"><input ng-model="query.Name" placeHolder="Stellent Name"></th>
-						<th ng-class="{'visible': titleVisible, 'hidden': !titleVisible}"><input ng-model="query.Title" placeHolder="Title"></th>
-						<th  ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}"><input ng-model="query.Description" placeHolder="Description"></th>
-						<th ng-class="{'visible': ownerVisible, 'hidden': !ownerVisible}"><input ng-model="query.ContentContact" placeHolder="Owner"></th>
-						<th>Accessible</th>
-						<th>Content Plan</th>
-						<th ng-class="{'visible': otherLanguageVisible, 'hidden': !otherLanguageVisible}"><input ng-model="query.HasTranslationLang" placeHolder="Other Languages"></th>
-						<th ng-class="{'visible': keywordsVisible, 'hidden': !keywordsVisible}"><input ng-model="query.Keywords" placeHolder="Keywords"></th>
-						<th ng-class="{'visible': publishedVisible, 'hidden': !publishedVisible}"><input ng-model="query.PublishedDate" placeHolder="Published"></th>
-						<th ng-class="{'visible': modifiedVisible, 'hidden': !modifiedVisible}"><input ng-model="query.ModifiedDate" placeHolder="Modified"></th>
+						<th ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}"><input ng-model="query.Subject" placeHolder="Subject"><i class="fa sort-icon" ng-click="sortClick('Subject')" ng-class="{'fa-caret-down': !sortOrders.Subject, 'fa-caret-up': sortOrders.Subject}"></i></th>
+						<th ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}"><input ng-model="query.OriginalName" placeHolder="File Name"><i class="fa sort-icon" ng-click="sortClick('OriginalName')" ng-class="{'fa-caret-down': !sortOrders.OriginalName, 'fa-caret-up': sortOrders.OriginalName}"></i></th>
+						<th ng-class="{'visible': stellentNameVisible, 'hidden': !stellentNameVisible}"><input ng-model="query.Name" placeHolder="Stellent Name"><i class="fa sort-icon" ng-click="sortClick('Name')" ng-class="{'fa-caret-down': !sortOrders.Name, 'fa-caret-up': sortOrders.Name}"></i></th>
+						<th ng-class="{'visible': titleVisible, 'hidden': !titleVisible}"><input ng-model="query.Title" placeHolder="Title"><i class="fa sort-icon" ng-click="sortClick('Title')" ng-class="{'fa-caret-down': !sortOrders.Title, 'fa-caret-up': sortOrders.Title}"></i></th>
+						<th  ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}"><input ng-model="query.Description" placeHolder="Description"><i class="fa sort-icon" ng-click="sortClick('Description')" ng-class="{'fa-caret-down': !sortOrders.Description, 'fa-caret-up': sortOrders.Description}"></i></th>
+						<th ng-class="{'visible': ownerVisible, 'hidden': !ownerVisible}"><input ng-model="query.ContentContact" placeHolder="Owner"><i class="fa sort-icon" ng-click="sortClick('Owner')" ng-class="{'fa-caret-down': !sortOrders.Owner, 'fa-caret-up': sortOrders.Owner}"></i></th>
+						<th>Accessible<i class="fa sort-icon" ng-click="sortClick('Accessible')" ng-class="{'fa-caret-down': !sortOrders.Accessible, 'fa-caret-up': sortOrders.Accessible}"></i></th>
+						<th>Content Plan<i class="fa sort-icon" ng-click="sortClick('ContentPlan')" ng-class="{'fa-caret-down': !sortOrders.ContentPlan, 'fa-caret-up': sortOrders.ContentPlan}"></i></th>
+						<th ng-class="{'visible': otherLanguageVisible, 'hidden': !otherLanguageVisible}"><input ng-model="query.HasTranslationLang" placeHolder="Other Languages"><i class="fa sort-icon" ng-click="sortClick('HasTranslationLang')" ng-class="{'fa-caret-down': !sortOrders.HasTranslationLang, 'fa-caret-up': sortOrders.HasTranslationLang}"></i></th>
+						<th ng-class="{'visible': keywordsVisible, 'hidden': !keywordsVisible}"><input ng-model="query.Keywords" placeHolder="Keywords"><i class="fa sort-icon" ng-click="sortClick('Keywords')" ng-class="{'fa-caret-down': !sortOrders.Keywords, 'fa-caret-up': sortOrders.Keywords}"></i></th>
+						<th ng-class="{'visible': publishedVisible, 'hidden': !publishedVisible}"><input ng-model="query.PublishDate" placeHolder="Published"><i class="fa sort-icon" ng-click="sortClick('PublishDate')" ng-class="{'fa-caret-down': !sortOrders.PublishDate, 'fa-caret-up': sortOrders.PublishDate}"></i></th>
+						<th ng-class="{'visible': modifiedVisible, 'hidden': !modifiedVisible}"><input ng-model="query.ModifiedDate" placeHolder="Modified"><i class="fa sort-icon" ng-click="sortClick('ModifiedDate')" ng-class="{'fa-caret-down': !sortOrders.ModifiedDate, 'fa-caret-up': sortOrders.ModifiedDate}"></i></th>
 						<!--th>Visible</th-->
 					</tr>
 				</thead>
-        <tr ng-repeat="pdf in fPdfs| filter:query:strict | startFrom:currentPage*pageSize | limitTo:pageSize"  ng-class="{'added': !pdf.toAdd, '': pdf.toAdd}" ng-class-odd="'odd'" ng-class-even="'even'">
+        <tr ng-repeat="pdf in fPdfs| filter:query:strict | orderBy:orderColumn | startFrom:currentPage*pageSize | limitTo:pageSize"  ng-class="{'added': !pdf.toAdd, '': pdf.toAdd}" ng-class-odd="'odd'" ng-class-even="'even'">
           <td><a class="add-toggle" ng-click="toggleAdded(pdf)" title="{{pdf.toAdd ? 'Add to list' : 'Remove from list'}}"><i class="fa" ng-class="{'fa-plus-circle': pdf.toAdd, 'fa-times-circle': !pdf.toAdd}"></i></a></td>
           <td ng-click="toggleAdded(pdf)"  ng-class="{'visible': accountVisible, 'hidden': !accountVisible}">{{dropMNR(pdf.Account)}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}">{{(pdf.Subject && hasData(pdf.Subject) ) ? pdf.Subject : '-'}}</td>

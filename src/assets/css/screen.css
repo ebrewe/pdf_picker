@@ -123,6 +123,13 @@ a.add-toggle {
 .fa-eye-slash {
   color: #b84237; }
 
+.sort-icon {
+  display: inline;
+  padding: 0 3px;
+  height: 26px;
+  vertical-align: top;
+  line-height: 26px !important; }
+
 #pagination-footer {
   -webkit-transition: opacity 0.2s linear;
   -moz-transition: opacity 0.2s linear;

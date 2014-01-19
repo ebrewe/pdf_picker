@@ -156,6 +156,14 @@ a.add-toggle {
   color:desaturate( darken($red, 7%), 7%);
 }
 
+.sort-icon {
+  display:inline;
+  padding: 0 3px;
+	height: 26px;
+	vertical-align: top;
+	line-height: 26px!important;
+}
+
 #pagination-footer{
   @include prefix(transition, opacity .2s linear);
   
