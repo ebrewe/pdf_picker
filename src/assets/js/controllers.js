@@ -5,7 +5,10 @@ var pdfControllers = angular.module('pdfControllers', []);
 pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
   function($scope, $http){
     $scope.tableLoaded = false;
-    $http.get('app/data/mnr_all-v3.xml').success( function(data){
+    $http.get('app/data/mnr_all-v3.xml')
+    .success( function(data){
+      $('.spinner').css('display', 'none');
+      $('.search, table').css('opacity', 0).addClass('visible').animate({opacity:1}); 
       var x2js = new X2JS(); 
       var jsonOb = x2js.xml_str2json( data );
       $scope.pdfs = jsonOb.Docs.Doc;
@@ -14,6 +17,7 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
       $scope.fPdfs = $scope.filterPdfs($scope.pdfs, $scope.currentTitle);
       $scope.tableLoaded = true;
     })
+    
     $scope.titles = "MNR*MNR/AFFM*MNR/About*MNR/Aggregates*MNR/Aquatics*MNR/Bearwise*MNR/Biodiversity*MNR/CLTIP*MNR/CNFER*MNR/ClimateChange*MNR/ContactUs*MNR/CrownLand*MNR/EmergencyManagement*MNR/Enforcement*MNR/FW*MNR/FarNorth*MNR/Forests*MNR/GeographicNames*MNR/GlobalFiles*MNR/GreatLakes*MNR/HomePage*MNR/KidsFish*MNR/LIO*MNR/LUEPS*MNR/LetsFish*MNR/NESI*MNR/NHIC*MNR/NWSI*MNR/Newsroom*MNR/OC*MNR/OFRI*MNR/OGSR*MNR/OMLC*MNR/OSG*MNR/OntarioWood*MNR/Parks*MNR/Rabies*MNR/Renewable*MNR/SORR*MNR/Species*MNR/Water*MNR/Wildlife*MNR/Youth*".split("*");
     
     $scope.currentTitle = $scope.titles[0];
@@ -35,6 +39,10 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
         angular.forEach(list, function(value, key){
           if(value.hasOwnProperty('Account') && value.Account == filter){
             value.toAdd = true;
+            
+
+            console.log(value)
+            
             rets.push(value);
           }
         });
@@ -188,6 +196,23 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
             });
 		}
 		
+		//drop the MNR/ from account names
+		$scope.dropMNR = function( title ){
+		  if(title.length > 3)
+		    return title.split('MNR/')[1];
+		  return title
+		}
+		
+		/* Paths for files, modify the 
+		   default in the line below */
+		   
+		$scope.defaultPath = 'path/to/';
+		
+		$scope.getPath = function(path) {
+		  var newPath = path.split('public://mnr_docs/')[1];
+		  return $scope.defaultPath+newPath;
+		}
+		
 		/* bootstrap pagination controls */
 		
 		$scope.currentPage = 0;
@@ -203,8 +228,8 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 	
 		/* field visibility toggles */
 		
-		$scope.accountVisible = true
-		$scope.subjectVisible = true
+		$scope.accountVisible = false
+		$scope.subjectVisible = false
 		$scope.fileNameVisible = true
 		$scope.stellentNameVisible = true
 		$scope.titleVisible = true

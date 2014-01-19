@@ -1,15 +1,21 @@
 <div class="container-fluid">
+    <div class="row-fluid spinner visible">
+      <div class="col-md-12">
+        <p>Loading data, <span>hang in there</span></p>
+        <div id="loading"></div>
+      </div>
+    </div>
     <!-- sidebar -->
-    <div class="row-fluid search">
+    <div class="row-fluid search clearfix">
       <h2>Filter Table</h2>
       <div class="col-md-3">
 				Account: 
 				<select  ng-model="currentTitle" ng-change="currentPage=0">
-					<option ng-repeat="title in titles" value="{{title}}">{{title}}</option>
+					<option ng-repeat="title in titles" value="{{title}}">{{dropMNR(title)}}</option>
 				</select>
 			</div>
 			<div class="col-md-2">
-        <i class="fa fa-search"></i> <input ng-model="query" placeholder="search">
+        <i class="fa fa-search"></i> <input ng-model="query.$" placeholder="search">
       </div>
       <div class="col-md-2">
 				<button ng-click="saveCSV()" class="btn btn-success">Save</button>
@@ -26,6 +32,7 @@
 			      Columns <i class="fa fa-caret-square-o-down"></i>
 			    </button>
 			    <ul class="dropdown-menu" role="menu">
+			      <li><a ng-click="toggleColumn('accountVisible')"><i class="fa" ng-class="{'fa-eye': accountVisible, 'fa-eye-slash': !accountVisible}"></i> <span>Account</span></a></li>
 			      <li><a ng-click="toggleColumn('subjectVisible')"><i class="fa" ng-class="{'fa-eye': subjectVisible, 'fa-eye-slash': !subjectVisible}"></i> <span>Subject</span></a></li>
 			      <li><a ng-click="toggleColumn('fileNameVisible')"><i class="fa" ng-class="{'fa-eye': fileNameVisible, 'fa-eye-slash': !fileNameVisible}"></i>  <span>File Name</span></a></li>
 			      <li><a ng-click="toggleColumn('stellentNameVisible')"><i class="fa" ng-class="{'fa-eye': stellentNameVisible, 'fa-eye-slash': !stellentNameVisible}"></i>  <span>Stellent Name</span></a></li>
@@ -47,27 +54,27 @@
         <thead>
 					<tr>
 						<th>Upload</th>
-						<th>Account</th>
-						<th ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}">Subject</th>
-						<th ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}">File Name</th>
-						<th ng-class="{'visible': stellentNameVisible, 'hidden': !stellentNameVisible}">Stellent Name</th>
-						<th ng-class="{'visible': titleVisible, 'hidden': !titleVisible}">Title</th>
-						<th  ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}">Description</th>
-						<th ng-class="{'visible': ownerVisible, 'hidden': !ownerVisible}">Owner</th>
+						<th ng-class="{'visible': accountVisible, 'hidden': !accountVisible}">Account</th>
+						<th ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}"><input ng-model="query.Subject" placeHolder="Subject"></th>
+						<th ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}"><input ng-model="query.OriginalName" placeHolder="File Name"></th>
+						<th ng-class="{'visible': stellentNameVisible, 'hidden': !stellentNameVisible}"><input ng-model="query.Name" placeHolder="Stellent Name"></th>
+						<th ng-class="{'visible': titleVisible, 'hidden': !titleVisible}"><input ng-model="query.Title" placeHolder="Title"></th>
+						<th  ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}"><input ng-model="query.Description" placeHolder="Description"></th>
+						<th ng-class="{'visible': ownerVisible, 'hidden': !ownerVisible}"><input ng-model="query.ContentContact" placeHolder="Owner"></th>
 						<th>Accessible</th>
 						<th>Content Plan</th>
-						<th ng-class="{'visible': otherLanguageVisible, 'hidden': !otherLanguageVisible}">Other Language</th>
-						<th ng-class="{'visible': keywordsVisible, 'hidden': !keywordsVisible}">Keywords</th>
-						<th ng-class="{'visible': publishedVisible, 'hidden': !publishedVisible}">Published</th>
-						<th ng-class="{'visible': modifiedVisible, 'hidden': !modifiedVisible}">Modified</th>
+						<th ng-class="{'visible': otherLanguageVisible, 'hidden': !otherLanguageVisible}"><input ng-model="query.HasTranslationLang" placeHolder="Other Languages"></th>
+						<th ng-class="{'visible': keywordsVisible, 'hidden': !keywordsVisible}"><input ng-model="query.Keywords" placeHolder="Keywords"></th>
+						<th ng-class="{'visible': publishedVisible, 'hidden': !publishedVisible}"><input ng-model="query.PublishedDate" placeHolder="Published"></th>
+						<th ng-class="{'visible': modifiedVisible, 'hidden': !modifiedVisible}"><input ng-model="query.ModifiedDate" placeHolder="Modified"></th>
 						<!--th>Visible</th-->
 					</tr>
 				</thead>
-        <tr ng-repeat="pdf in fPdfs| filter:query | startFrom:currentPage*pageSize | limitTo:pageSize"  ng-class="{'added': !pdf.toAdd, '': pdf.toAdd}" ng-class-odd="'odd'" ng-class-even="'even'">
+        <tr ng-repeat="pdf in fPdfs| filter:query:strict | startFrom:currentPage*pageSize | limitTo:pageSize"  ng-class="{'added': !pdf.toAdd, '': pdf.toAdd}" ng-class-odd="'odd'" ng-class-even="'even'">
           <td><a class="add-toggle" ng-click="toggleAdded(pdf)" title="{{pdf.toAdd ? 'Add to list' : 'Remove from list'}}"><i class="fa" ng-class="{'fa-plus-circle': pdf.toAdd, 'fa-times-circle': !pdf.toAdd}"></i></a></td>
-          <td ng-click="toggleAdded(pdf)">{{pdf.Account}}</td>
+          <td ng-click="toggleAdded(pdf)"  ng-class="{'visible': accountVisible, 'hidden': !accountVisible}">{{dropMNR(pdf.Account)}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}">{{(pdf.Subject && hasData(pdf.Subject) ) ? pdf.Subject : '-'}}</td>
-          <td ng-click="toggleAdded(pdf)" ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}">{{pdf.OriginalName}}</td>
+          <td ng-click="toggleAdded(pdf)" ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}"><a ng-href="{{getPath(pdf.Path)}}">{{pdf.OriginalName}}</a></td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': stellentNameVisible, 'hidden': !stellentNameVisible}">{{pdf.Name}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': titleVisible, 'hidden': !titleVisible}">{{pdf.Title}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}">{{pdf.Description}}</td>
@@ -82,7 +89,7 @@
         </tr>
       </table>
     </div>
-    <div id="pagination-footer" class="span12">
+    <div id="pagination-footer" class="span12" ng-class="{'visible': numberOfPages > 0, 'hidden': numberOfPages <= 0}" >
       <button ng-disabled="currentPage ==0" ng-click="currentPage=currentPage-1">Previous</button>
       {{currentPage + 1}}/{{numberOfPages}}      
 			<button ng-disabled="currentPage >= dataLength/pageSize - 1" ng-click="currentPage=currentPage+1">Next</button>
