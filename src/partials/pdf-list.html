@@ -17,10 +17,6 @@
 			<div class="col-md-2">
         <i class="fa fa-search"></i> <input ng-model="query.$" placeholder="search">
       </div>
-      <div class="col-md-2">
-				<button ng-click="saveCSV()" class="btn btn-success">Save</button>
-				<button ng-click="rgetCSV()" class="btn btn-default">Open</button>
-		  </div>
 		  <div class="col-md-3">
 				<button ng-disabled="currentPage ==0" ng-click="currentPage=currentPage-1">Previous</button>
 				{{currentPage + 1}}/{{numberOfPages}}      
@@ -46,6 +42,10 @@
 			    </ul>
 			  </div>
 			</div>
+      <div class="col-md-2">
+				<button ng-click="saveCSV()" class="btn btn-success">Save</button>
+				<button ng-click="rgetCSV()" class="btn btn-default">Open</button>
+		  </div>
     </div>
     
   <div class="row-fluid">
@@ -53,7 +53,7 @@
       <table dataTable class="table">
         <thead>
 					<tr>
-						<th>Upload</th>
+						<th>Upload <i class="fa sort-icon" ng-click="sortClick('Upload')" ng-class="{'fa-caret-down': !sortOrders.Upload, 'fa-caret-up': sortOrders.Upload}"></i></th>
 						<th ng-class="{'visible': accountVisible, 'hidden': !accountVisible}">Account</th>
 						<th ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}"><input ng-model="query.Subject" placeHolder="Subject"><i class="fa sort-icon" ng-click="sortClick('Subject')" ng-class="{'fa-caret-down': !sortOrders.Subject, 'fa-caret-up': sortOrders.Subject}"></i></th>
 						<th ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}"><input ng-model="query.OriginalName" placeHolder="File Name"><i class="fa sort-icon" ng-click="sortClick('OriginalName')" ng-class="{'fa-caret-down': !sortOrders.OriginalName, 'fa-caret-up': sortOrders.OriginalName}"></i></th>
