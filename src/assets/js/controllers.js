@@ -34,10 +34,7 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
       if(list){
         angular.forEach(list, function(value, key){
           if(value.hasOwnProperty('Account') && value.Account == filter){
-            value.toAdd = true;
-            value.Description = $scope.getExcerpt(value.Description, $scope.excerptLimit, true)     
-            value.Title = $scope.getExcerpt(value.Title, $scope.excerptLimit, true)  
-            value.Keywords = $scope.getExcerpt(value.Keywords, $scope.excerptLimit, true)        
+            value.toAdd = true;     
             rets.push(value);
           }
         });
@@ -205,6 +202,7 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 		  console.log ('Saving', $scope.addList);
 		  var purl = 'app/putCSV.php',
 		  postData = $scope.addList;
+		  console.log(postData)
 		  $http({
             url: purl,
             method: "POST",
