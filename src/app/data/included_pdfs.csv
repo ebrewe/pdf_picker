@@ -1,6 +1,6 @@
-Name,Title,OriginalName,Description,Keywords,Account,ContentContact,PublishDate,ModifiedDate,Path,HasTranslation,HasTranslationLang,_Name,toAdd
-stel01_130323,002appendix.pdf,002appendix.pdf,,,MNR,,2010-05-06,,public://mnr_docs/002appendix.pdf,,,stel01_130323,
-002appendix.pdf,002appendix.pdf,002appendix.pdf,,,MNR,,2010-05-06,,public://mnr_docs/002appendix.pdf,,,002appendix.pdf,
-stel01_130928,002appendix,002appendix.pdf,,,MNR,,2010-05-06,,public://mnr_docs/002appendix.pdf,,,stel01_130928,
-02_03_1,02_03_1.pdf,02_03_1.pdf,,,MNR,,2010-05-06,,public://mnr_docs/02_03_1.pdf,,,02_03_1,
-stel01_130924,02_03_1,02_03_1.pdf,,,MNR,,2010-05-06,,public://mnr_docs/02_03_1.pdf,,,stel01_130924,
+file_name,accessible,title,description,publish_date
+stel01_130323,002appendix.pdf,,2010-05-06,false
+002appendix.pdf,002appendix.pdf,,2010-05-06,false
+stel01_130928,002appendix,,2010-05-06,false
+02_03_1,02_03_1.pdf,,2010-05-06,false
+stel01_130924,02_03_1,,2010-05-06,false

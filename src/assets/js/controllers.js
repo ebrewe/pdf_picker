@@ -37,7 +37,10 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
             value.toAdd = true;
             /*value.Description = $scope.getExcerpt(value.Description, $scope.excerptLimit, true)     
             value.Title = $scope.getExcerpt(value.Title, $scope.excerptLimit, true)  
-            value.Keywords = $scope.getExcerpt(value.Keywords, $scope.excerptLimit, true) */       
+            value.Keywords = $scope.getExcerpt(value.Keywords, $scope.excerptLimit, true) */  
+            if(!value.Accessible){
+              value.Accessible = 'false';
+            }
             rets.push(value);
           }
         });
