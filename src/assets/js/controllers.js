@@ -1,6 +1,6 @@
 'use strict'; 
 
-var pdfControllers = angular.module('pdfControllers', []);
+var pdfControllers = angular.module('pdfControllers', ['ngSanitize']);
 
 pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
   function($scope, $http){
@@ -35,10 +35,9 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
         angular.forEach(list, function(value, key){
           if(value.hasOwnProperty('Account') && value.Account == filter){
             value.toAdd = true;
-            
-
-            console.log(value)
-            
+            value.Description = $scope.getExcerpt(value.Description, $scope.excerptLimit, true)     
+            value.Title = $scope.getExcerpt(value.Title, $scope.excerptLimit, true)  
+            value.Keywords = $scope.getExcerpt(value.Keywords, $scope.excerptLimit, true)        
             rets.push(value);
           }
         });
@@ -268,6 +267,44 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
 		  $scope[column] = ! $scope[column];
 		}
 		
+		/* excerpts */
+		$scope.excerptLimit = 50;
+		
+		$scope.getExcerpt = function(str, limit, readMore) {
+			var cutTo, firstHalf, secondHalf, tempText;
+			if (limit == null) {
+				limit = 100;
+			}
+			if (readMore == null) {
+				readMore = false;
+			}
+			tempText = str.substr(0, limit);
+			cutTo = tempText.lastIndexOf(' ');
+			if (limit > 30 && cutTo > (limit - 20)) {
+				firstHalf = str.substr(0, cutTo);
+				secondHalf = str.substr(cutTo + 1, str.length);
+				return '<span class="excerpt">' + firstHalf + '... </span><span class="remaining-text hidden">' + secondHalf + '</span>' + '<a class="more-content" data-expanded="1">expand<i class="fa fa-caret-down excerpt-icon"></i></a>'; 
+			}
+			return '<span>' + str + '</span>';
+	  }
+	  
+	  $scope.$on('LastElem', function(e){
+	    $('.td-excerpt').each( function(){
+	      $(this).on('click', '.more-content', function(ev){
+	        ev.stopPropagation();
+	        if( !$(this).hasClass('expanded') ){
+	          $(this).addClass('expanded');
+	          $(this).html('  close<i class="fa fa-caret-up"></i>');
+	        }else{
+	          $(this).removeClass('expanded')
+	          $(this).html('expand<i class="fa fa-caret-down excerpt-icon"></i>');
+	        }
+	        var $parent = $(this).closest('td')
+	        $parent.find('.remaining-text').fadeToggle( function(){$parent.find('.remaining-text').toggleClass('hidden')});
+	      })
+	    });
+	  })
+		
   
   }])
   .directive('table', function(){
@@ -283,6 +320,13 @@ pdfControllers.controller('PdfListCtrl', ['$scope', '$http',
       }
     });
   })
+  .directive('repeatDirective', function() {
+		return function(scope, element, attrs) {
+			if (scope.$last){
+				scope.$emit('LastElem');
+			}
+		}
+	})
   .filter('startFrom', function(){
     return function(input, start){
       start = +start;

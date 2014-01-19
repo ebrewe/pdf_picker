@@ -130,6 +130,14 @@ a.add-toggle {
   vertical-align: top;
   line-height: 26px !important; }
 
+.more-content {
+  cursor: pointer; }
+
+.td-excerpt a {
+  display: block; }
+  .td-excerpt a i {
+    font-size: 12px; }
+
 #pagination-footer {
   -webkit-transition: opacity 0.2s linear;
   -moz-transition: opacity 0.2s linear;

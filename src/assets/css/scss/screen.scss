@@ -164,6 +164,17 @@ a.add-toggle {
 	line-height: 26px!important;
 }
 
+.more-content{
+  cursor:pointer; 
+}
+.td-excerpt a{
+  display:block; 
+  
+  i {
+    font-size:12px; 
+  }
+}
+
 #pagination-footer{
   @include prefix(transition, opacity .2s linear);
   

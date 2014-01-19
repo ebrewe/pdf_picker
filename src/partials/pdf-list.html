@@ -70,19 +70,19 @@
 						<!--th>Visible</th-->
 					</tr>
 				</thead>
-        <tr ng-repeat="pdf in fPdfs| filter:query:strict | orderBy:orderColumn | startFrom:currentPage*pageSize | limitTo:pageSize"  ng-class="{'added': !pdf.toAdd, '': pdf.toAdd}" ng-class-odd="'odd'" ng-class-even="'even'">
+        <tr ng-repeat="pdf in fPdfs| filter:query:strict | orderBy:orderColumn | startFrom:currentPage*pageSize | limitTo:pageSize"  ng-class="{'added': !pdf.toAdd, '': pdf.toAdd}" ng-class-odd="'odd'" ng-class-even="'even'" repeat-Directive>
           <td><a class="add-toggle" ng-click="toggleAdded(pdf)" title="{{pdf.toAdd ? 'Add to list' : 'Remove from list'}}"><i class="fa" ng-class="{'fa-plus-circle': pdf.toAdd, 'fa-times-circle': !pdf.toAdd}"></i></a></td>
           <td ng-click="toggleAdded(pdf)"  ng-class="{'visible': accountVisible, 'hidden': !accountVisible}">{{dropMNR(pdf.Account)}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': subjectVisible, 'hidden': !subjectVisible}">{{(pdf.Subject && hasData(pdf.Subject) ) ? pdf.Subject : '-'}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': fileNameVisible, 'hidden': !fileNameVisible}"><a ng-href="{{getPath(pdf.Path)}}">{{pdf.OriginalName}}</a></td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': stellentNameVisible, 'hidden': !stellentNameVisible}">{{pdf.Name}}</td>
-          <td ng-click="toggleAdded(pdf)" ng-class="{'visible': titleVisible, 'hidden': !titleVisible}">{{pdf.Title}}</td>
-          <td ng-click="toggleAdded(pdf)" ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}">{{pdf.Description}}</td>
+          <td class="td-excerpt" ng-click="toggleAdded(pdf)" ng-class="{'visible': titleVisible, 'hidden': !titleVisible}"  ng-bind-html="pdf.Title"></td>
+          <td class="td-excerpt" ng-click="toggleAdded(pdf)" ng-class="{'visible': descriptionVisible, 'hidden': !descriptionVisible}" ng-bind-html="pdf.Description"></td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': ownerVisible, 'hidden': !ownerVisible}">{{(pdf.ContentContact && hasData(pdf.ContentContact)) ? pdf.ContentContact : '-'}}</td>
           <td><input type="checkbox" /></td>
           <td><input type="checkbox" /></td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': otherLanguageVisible, 'hidden': !otherLanguageVisible}">{{(pdf.HasTranslationLang && hasData(pdf.HasTranslationLang) )? pdf.HasTranslationLang : '-'}}</td>
-          <td ng-click="toggleAdded(pdf)" ng-class="{'visible': keywordsVisible, 'hidden': !keywordsVisible}">{{pdf.Keywords}}</td>
+          <td class="td-excerpt" ng-click="toggleAdded(pdf)" ng-class="{'visible': keywordsVisible, 'hidden': !keywordsVisible}"  ng-bind-html="pdf.Keywords"></td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': publishedVisible, 'hidden': !publishedVisible}">{{pdf.PublishDate}}</td>
           <td ng-click="toggleAdded(pdf)" ng-class="{'visible': modifiedVisible, 'hidden': !modifiedVisible}">{{pdf.ModifiedDate}}</td>
           <!--td><a href="#" ng-click="rowCollapse($event)"><i ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i></a></td -->
